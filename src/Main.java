@@ -28,7 +28,7 @@ public class Main {
         ArrayList<BaseHero> team = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            Coordinate coordinates = new Coordinate(0, i); // Команда 1 находится в левой части поля
+            Coordinate coordinates = new Coordinate(index * 3, i); // Команда 1 находится в левой части поля
             team.add(randomHero(index, random, coordinates));
         }
 

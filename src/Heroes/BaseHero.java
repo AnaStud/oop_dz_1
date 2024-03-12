@@ -1,6 +1,4 @@
 package Heroes;
-
-import java.sql.SQLOutput;
 import java.util.Random;
 
 public abstract class BaseHero {
