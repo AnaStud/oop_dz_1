@@ -3,8 +3,8 @@ package Heroes;
 //Колдун
 public class Magician extends BaseHero {
 
-    public Magician() {
-        super();
+    public Magician(Coordinate coordinates) {
+        super(coordinates);
         this.strength = 50;
         this.weapon = 0;
         this.money = 0;
@@ -18,7 +18,7 @@ public class Magician extends BaseHero {
 
     @Override
     public void getMoney() {
-        this.money += 100;
+        this.money += 10;
         this.strength -= 1;
         System.out.printf("%s: Я наколдовал 10 монет. Потратил 1 силу.\n", this.name);
     }

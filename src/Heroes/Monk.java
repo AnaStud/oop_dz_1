@@ -3,8 +3,8 @@ package Heroes;
 //Монах
 public class Monk extends BaseHero {
 
-    public Monk() {
-        super();
+    public Monk(Coordinate coordinates) {
+        super(coordinates);
         this.strength = 10;
         this.weapon = 0;
         this.money = 0;

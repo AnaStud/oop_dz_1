@@ -1,7 +1,8 @@
 package Heroes;
 
+import java.sql.SQLOutput;
 import java.util.Random;
- 
+
 public abstract class BaseHero {
     protected static int id;
     protected static Random random;
@@ -11,15 +12,17 @@ public abstract class BaseHero {
     protected int strength;
     protected int weapon;
     protected int money;
+    protected Coordinate coordinates;
 
     static {
         BaseHero.id = 0;
         BaseHero.random = new Random();
     }
-    public BaseHero() {
+    public BaseHero(Coordinate coordinates) {
         this.name = String.format("%s_%d", this.getClass().getSimpleName(), ++BaseHero.id);
         this.hp = 100;
         this.maxHp = 100;
+        this.coordinates = coordinates;
     }
 
     @Override
@@ -30,6 +33,16 @@ public abstract class BaseHero {
 
     public String getName() {
         return this.name;
+    }
+    public int getX() {
+        return this.coordinates.x;
+    }
+    public int getY() {
+        return this.coordinates.y;
+    }
+
+    public String getCoordinates() {
+        return "(" + String.valueOf(coordinates.x) + ":" + String.valueOf(coordinates.y) + ")";
     }
 
     public void attack(BaseHero target) {

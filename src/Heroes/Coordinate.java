@@ -1,3 +1,5 @@
+package Heroes;
+
 public class Coordinate {
     int x;
     int y;
@@ -7,7 +9,7 @@ public class Coordinate {
         this.y = y;
     }
 
-    public double calculateDistance(Coordinate other) {
-        return Math.sqrt(Math.pow(this.x - other.x, 2) + Math.pow(this.y - other.y, 2));
+    public double calculateDistance(int otherX, int otherY) {
+        return Math.sqrt(Math.pow(this.x - otherX, 2) + Math.pow(this.y - otherY, 2));
     }
 }

@@ -3,8 +3,8 @@ package Heroes;
 //Снайпер
 public class Sniper extends BaseHero {
 
-    public Sniper() {
-        super();
+    public Sniper(Coordinate coordinates) {
+        super(coordinates);
         this.strength = 100;
         this.weapon = 100;
         this.money = 0;

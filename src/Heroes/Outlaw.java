@@ -3,8 +3,8 @@ package Heroes;
 //Разбойник
 public class Outlaw extends BaseHero {
 
-    public Outlaw() {
-        super();
+    public Outlaw(Coordinate coordinates) {
+        super(coordinates);
         this.strength = 50;
         this.weapon = 10;
         this.money = 0;

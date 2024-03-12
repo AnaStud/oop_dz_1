@@ -3,8 +3,8 @@ package Heroes;
 //Крестьянин
 public class Peasant extends BaseHero {
 
-    public Peasant() {
-        super();
+    public Peasant(Coordinate coordinates) {
+        super(coordinates);
         this.strength = 10;
         this.weapon = 0;
         this.money = 0;

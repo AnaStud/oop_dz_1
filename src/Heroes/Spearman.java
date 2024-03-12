@@ -3,8 +3,8 @@ package Heroes;
 //Копейщик
 public class Spearman extends BaseHero {
 
-    public Spearman() {
-        super();
+    public Spearman(Coordinate coordinates) {
+        super(coordinates);
         this.strength = 50;
         this.weapon = 10;
         this.money = 100;
