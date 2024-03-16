@@ -14,12 +14,13 @@ public class Main {
         ArrayList<BaseHero> team2 = createTeam("Team 2", 3, random);
         System.out.println();
 
-        for (BaseHero hero : team1) {
-            if (hero instanceof Crossbowman) {
-                BaseHero closest = ((Crossbowman) hero).findClosestElement(team2);
-                System.out.println("Для " + hero.getName() + " ближайший соперник " + closest.getName());
-            }
-        }
+        ArrayList<BaseHero> moves = new ArrayList<>();
+        moves.addAll(team1);
+        moves.addAll(team2);
+
+        moves.sort((hero1, hero2) -> hero2.initiative - hero1.initiative);
+
+        moves.forEach(hero -> System.out.println(hero.getName() + ", initiative = " + hero.initiative));
 
     }
 
@@ -33,9 +34,7 @@ public class Main {
         }
 
         System.out.println(teamName + ":");
-        for (BaseHero hero : team) {
-            System.out.println(hero.getName() + hero.getCoordinates());
-        }
+        team.forEach(hero ->System.out.println(hero.getName() + hero.getCoordinates()));
 
         return team;
 
@@ -43,34 +42,18 @@ public class Main {
 
     public static BaseHero randomHero(int index, Random random, Coordinate coordinates) {
 
-        BaseHero hero = null;
-
         int choice = index + random.nextInt(4);
-        switch (choice) {
-            case 0:
-                hero = new Magician(coordinates); //Колдун
-                break;
-            case 1:
-                hero = new Crossbowman(coordinates); //Арбалетчик
-                break;
-            case 2:
-                hero = new Spearman(coordinates); //Копейщик
-                break;
-            case 3:
-                hero = new Peasant(coordinates); //Крестьянин
-                break;
-            case 4:
-                hero = new Sniper(coordinates); //Снайпер
-                break;
-            case 5:
-                hero = new Monk(coordinates); //Монах
-                break;
-            case 6:
-                hero = new Outlaw(coordinates); //Разбойник
-                break;
-        }
 
-        return hero;
+        return switch (choice) {
+            case 0 -> new Magician(coordinates); //Колдун / Маг
+            case 1 -> new Crossbowman(coordinates); //Арбалетчик / Лучник
+            case 2 -> new Spearman(coordinates); //Копейщик / Пехота
+            case 3 -> new Peasant(coordinates); //Крестьянин
+            case 4 -> new Sniper(coordinates); //Снайпер
+            case 5 -> new Monk(coordinates); //Монах
+            case 6 -> new Outlaw(coordinates); //Разбойник / Вор
+            default -> new Peasant(coordinates); //если что-то пошло не так, пусть будет крестьянин
+        };
 
     }
 }

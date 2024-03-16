@@ -1,5 +1,7 @@
 package Heroes;
 
+import java.util.ArrayList;
+
 //Монах
 public class Monk extends BaseHero {
 
@@ -8,6 +10,7 @@ public class Monk extends BaseHero {
         this.strength = 10;
         this.weapon = 0;
         this.money = 0;
+        this.initiative = 0;
     }
 
     @Override
@@ -26,5 +29,10 @@ public class Monk extends BaseHero {
         this.money += 10;
         this.strength -= 1;
         System.out.printf("%s: Я заработал 10 монет. Потратил 1 силу.\n", this.name);
+    }
+
+    @Override
+    public void step(ArrayList<BaseHero> opponents) {
+
     }
 }

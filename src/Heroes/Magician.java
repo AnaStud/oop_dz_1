@@ -1,5 +1,7 @@
 package Heroes;
 
+import java.util.ArrayList;
+
 //Колдун
 public class Magician extends BaseHero {
 
@@ -8,6 +10,7 @@ public class Magician extends BaseHero {
         this.strength = 50;
         this.weapon = 0;
         this.money = 0;
+        this.initiative = 1;
     }
 
     @Override
@@ -21,5 +24,10 @@ public class Magician extends BaseHero {
         this.money += 10;
         this.strength -= 1;
         System.out.printf("%s: Я наколдовал 10 монет. Потратил 1 силу.\n", this.name);
+    }
+
+    @Override
+    public void step(ArrayList<BaseHero> opponents) {
+
     }
 }

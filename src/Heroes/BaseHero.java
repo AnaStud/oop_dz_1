@@ -1,16 +1,19 @@
 package Heroes;
+import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class BaseHero {
+public abstract class BaseHero implements Stepable {
     protected static int id;
     protected static Random random;
-    protected String name;
-    protected int hp;
-    protected int maxHp;
-    protected int strength;
-    protected int weapon;
-    protected int money;
-    protected Coordinate coordinates;
+    protected String name; //имя
+    protected int hp; //здоровье
+    protected int maxHp; //максимальное здоровье
+    protected int strength; //сила
+    protected int weapon; //оружие
+    protected int money; //деньги
+    protected Coordinate coordinates; //положение на поле (координаты)
+
+    public int initiative; //инициатива
 
     static {
         BaseHero.id = 0;
@@ -62,4 +65,6 @@ public abstract class BaseHero {
     }
 
     public abstract void getMoney();
+
+    public abstract void step(ArrayList<BaseHero> opponents);
 }

@@ -8,6 +8,7 @@ public class Crossbowman extends BaseHero {
         this.strength = 80;
         this.weapon = 80;
         this.money = 100;
+        this.initiative = 3;
     }
 
     @Override
@@ -32,4 +33,14 @@ public class Crossbowman extends BaseHero {
 
         return closestHero;
     }
+
+    @Override
+    public void step(ArrayList<BaseHero> opponents) {
+        if (this.hp > 0 && this.weapon > 0) {
+            BaseHero closestOpponent = findClosestElement(opponents);
+            attack(closestOpponent);
+            this.weapon--;
+        }
+    }
+
 }
