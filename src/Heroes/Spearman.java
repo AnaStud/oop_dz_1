@@ -21,7 +21,15 @@ public class Spearman extends BaseHero {
     }
 
     @Override
-    public void step(ArrayList<BaseHero> opponents) {
-
+    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends) {
+        if (this.hp > 0 && this.weapon > 0) {
+            BaseHero closestOpponent = findClosestElement(opponents);
+            double distance = this.coordinates.calculateDistance(closestOpponent.getX(), closestOpponent.getY());
+            if (distance < 2) {
+                attack(closestOpponent);
+            } else {
+                goToOpponent(closestOpponent, friends);
+            }
+        }
     }
 }

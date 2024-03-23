@@ -2,8 +2,6 @@ import Heroes.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
 
@@ -20,7 +18,27 @@ public class Main {
 
         moves.sort((hero1, hero2) -> hero2.initiative - hero1.initiative);
 
-        moves.forEach(hero -> System.out.println(hero.getName() + ", initiative = " + hero.initiative));
+        //moves.forEach(hero -> System.out.println(hero.getName() + ", initiative = " + hero.initiative));
+        for (BaseHero hero : moves) {
+            if (hero instanceof Spearman) {
+                System.out.println(hero.getName() + ", initiative = " + hero.initiative + hero.getCoordinates());
+
+                ArrayList<BaseHero> friends;
+                ArrayList<BaseHero> opponents;
+                if (team1.contains(hero)) {
+                    friends = team1;
+                    opponents = team2;
+                } else {
+                    friends = team2;
+                    opponents = team1;
+                }
+
+                for (int i = 0; i < 15; i++) {
+                    hero.step(opponents, friends);
+                }
+                System.out.println(hero.getName() + ", initiative = " + hero.initiative + hero.getCoordinates());
+            }
+        }
 
     }
 
@@ -28,7 +46,7 @@ public class Main {
 
         ArrayList<BaseHero> team = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < (index == 0 ? 10 : index); i++) { // Для проверки движения по оси Y
             Coordinate coordinates = new Coordinate(index * 3, i); // Команда 1 находится в левой части поля
             team.add(randomHero(index, random, coordinates));
         }

@@ -27,7 +27,8 @@ public class Magician extends BaseHero {
     }
 
     @Override
-    public void step(ArrayList<BaseHero> opponents) {
+    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends) {
 
     }
+
 }

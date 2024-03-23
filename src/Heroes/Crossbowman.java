@@ -18,29 +18,12 @@ public class Crossbowman extends BaseHero {
         System.out.printf("%s: Я заработал 100 монет. Потратил 1 оружие.\n", this.name);
     }
 
-    public BaseHero findClosestElement(ArrayList<BaseHero> opponents) {
-
-        BaseHero closestHero = opponents.getFirst();
-        double minDistance = this.coordinates.calculateDistance(closestHero.getX(), closestHero.getY());
-
-        for (BaseHero hero : opponents) {
-            double distance = this.coordinates.calculateDistance(hero.getX(), hero.getY());
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestHero = hero;
-            }
-        }
-
-        return closestHero;
-    }
-
     @Override
-    public void step(ArrayList<BaseHero> opponents) {
+    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends) {
         if (this.hp > 0 && this.weapon > 0) {
             BaseHero closestOpponent = findClosestElement(opponents);
             attack(closestOpponent);
             this.weapon--;
         }
     }
-
 }
