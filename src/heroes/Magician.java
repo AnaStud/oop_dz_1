@@ -1,4 +1,4 @@
-package Heroes;
+package heroes;
 
 import java.util.ArrayList;
 
@@ -27,8 +27,8 @@ public class Magician extends BaseHero {
     }
 
     @Override
-    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends) {
-
+    public String getInfo() {
+        return "Колдун";
     }
 
 }

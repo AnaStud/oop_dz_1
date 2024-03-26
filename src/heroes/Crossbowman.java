@@ -1,4 +1,4 @@
-package Heroes;
+package heroes;
 import java.util.ArrayList;
 //Арбалетчик
 public class Crossbowman extends BaseHero {
@@ -19,11 +19,16 @@ public class Crossbowman extends BaseHero {
     }
 
     @Override
-    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends) {
+    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends, int direction) {
         if (this.hp > 0 && this.weapon > 0) {
             BaseHero closestOpponent = findClosestElement(opponents);
             attack(closestOpponent);
             this.weapon--;
         }
+    }
+
+    @Override
+    public String getInfo() {
+        return "Арбалетчик";
     }
 }

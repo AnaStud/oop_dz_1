@@ -1,4 +1,4 @@
-package Heroes;
+package heroes;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class Spearman extends BaseHero {
     }
 
     @Override
-    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends) {
+    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends, int direction) {
         if (this.hp > 0 && this.weapon > 0) {
             BaseHero closestOpponent = findClosestElement(opponents);
             double distance = this.coordinates.calculateDistance(closestOpponent.getX(), closestOpponent.getY());
@@ -31,5 +31,10 @@ public class Spearman extends BaseHero {
                 goToOpponent(closestOpponent, friends);
             }
         }
+    }
+
+    @Override
+    public String getInfo() {
+        return "Копейщик";
     }
 }

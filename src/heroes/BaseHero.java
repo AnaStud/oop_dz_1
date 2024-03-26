@@ -1,4 +1,4 @@
-package Heroes;
+package heroes;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -35,12 +35,9 @@ public abstract class BaseHero implements Stepable {
     public String getName() {
         return this.name;
     }
-    public int getX() {
-        return this.coordinates.x;
-    }
-    public int getY() {
-        return this.coordinates.y;
-    }
+    public int getHp() { return this.hp; }
+    public int getX() { return this.coordinates.x; }
+    public int getY() { return this.coordinates.y; }
 
     public String getCoordinates() {
         return " (" + String.valueOf(coordinates.x) + ":" + String.valueOf(coordinates.y) + ")";
@@ -95,5 +92,7 @@ public abstract class BaseHero implements Stepable {
 
     public abstract void getMoney();
 
-    public abstract void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends);
+    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends, int direction) {
+        this.coordinates.x += direction;
+    }
 }

@@ -1,52 +1,56 @@
-import Heroes.*;
+package controller;
+
+import heroes.*;
+import view.View;
+
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
+
+    public static ArrayList<BaseHero> team1;
+    public static ArrayList<BaseHero> team2;
+    public static ArrayList<BaseHero> allTeam;
     public static void main(String[] args) {
 
         Random random = new Random();
 
-        ArrayList<BaseHero> team1 = createTeam("Team 1", 0, random);
+        team1 = createTeam("Team 1", 0, random);
         System.out.println();
-        ArrayList<BaseHero> team2 = createTeam("Team 2", 3, random);
+        team2 = createTeam("Team 2", 3, random);
         System.out.println();
 
-        ArrayList<BaseHero> moves = new ArrayList<>();
-        moves.addAll(team1);
-        moves.addAll(team2);
+        allTeam = new ArrayList<>();
+        allTeam.addAll(team1);
+        allTeam.addAll(team2);
 
-        moves.sort((hero1, hero2) -> hero2.initiative - hero1.initiative);
+        allTeam.sort((hero1, hero2) -> hero2.initiative - hero1.initiative);
 
-        //moves.forEach(hero -> System.out.println(hero.getName() + ", initiative = " + hero.initiative));
-        for (BaseHero hero : moves) {
-            if (hero instanceof Spearman) {
-                System.out.println(hero.getName() + ", initiative = " + hero.initiative + hero.getCoordinates());
+        Scanner sin = new Scanner(System.in);
 
-                ArrayList<BaseHero> friends;
-                ArrayList<BaseHero> opponents;
+        View.view();
+        while (true) {
+            for (BaseHero hero : allTeam) {
                 if (team1.contains(hero)) {
-                    friends = team1;
-                    opponents = team2;
+                    hero.step(team2, team1, 1);
                 } else {
-                    friends = team2;
-                    opponents = team1;
+                    hero.step(team1, team2, -1);
                 }
-
-                for (int i = 0; i < 15; i++) {
-                    hero.step(opponents, friends);
-                }
-                System.out.println(hero.getName() + ", initiative = " + hero.initiative + hero.getCoordinates());
+            }
+            View.view();
+            if (Objects.equals(sin.nextLine(), "q")) {
+                break;
             }
         }
-
     }
 
     public static ArrayList<BaseHero> createTeam(String teamName, int index, Random random) {
 
         ArrayList<BaseHero> team = new ArrayList<>();
 
-        for (int i = 0; i < (index == 0 ? 10 : index); i++) { // Для проверки движения по оси Y
+        for (int i = 0; i < 10; i++) {
             Coordinate coordinates = new Coordinate(index * 3, i); // Команда 1 находится в левой части поля
             team.add(randomHero(index, random, coordinates));
         }
@@ -63,7 +67,7 @@ public class Main {
         int choice = index + random.nextInt(4);
 
         return switch (choice) {
-            case 0 -> new Magician(coordinates); //Колдун / Маг
+            case 0 -> new Magician(coordinates  ); //Колдун / Маг
             case 1 -> new Crossbowman(coordinates); //Арбалетчик / Лучник
             case 2 -> new Spearman(coordinates); //Копейщик / Пехота
             case 3 -> new Peasant(coordinates); //Крестьянин
