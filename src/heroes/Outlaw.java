@@ -22,6 +22,6 @@ public class Outlaw extends BaseHero {
 
     @Override
     public String getInfo() {
-        return "Разбойник";
+        return "Разбойник: " + this.history;
     }
 }

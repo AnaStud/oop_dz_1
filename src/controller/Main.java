@@ -17,9 +17,9 @@ public class Main {
 
         Random random = new Random();
 
-        team1 = createTeam("Team 1", 0, random);
+        team1 = createTeam("Green", 0, random);
         System.out.println();
-        team2 = createTeam("Team 2", 3, random);
+        team2 = createTeam("Blue", 3, random);
         System.out.println();
 
         allTeam = new ArrayList<>();
@@ -28,21 +28,27 @@ public class Main {
 
         allTeam.sort((hero1, hero2) -> hero2.initiative - hero1.initiative);
 
-        Scanner sin = new Scanner(System.in);
-
+        boolean theEnd = false;
         View.view();
-        while (true) {
+        for (int i = 0; i < 1000; i++) {
             for (BaseHero hero : allTeam) {
                 if (team1.contains(hero)) {
                     hero.step(team2, team1, 1);
+                    if (hero.isWinner(team2)) {
+                        System.out.println("Команда Green победила!");
+                        theEnd = true;
+                        break;
+                    }
                 } else {
                     hero.step(team1, team2, -1);
+                    if (hero.isWinner(team1)) {
+                        System.out.println("Команда Blue победила!");
+                        theEnd = true;
+                        break;
+                    }
                 }
             }
-            View.view();
-            if (Objects.equals(sin.nextLine(), "q")) {
-                break;
-            }
+            if (theEnd) { break; } else { View.view(); }
         }
     }
 
@@ -55,8 +61,8 @@ public class Main {
             team.add(randomHero(index, random, coordinates));
         }
 
-        System.out.println(teamName + ":");
-        team.forEach(hero ->System.out.println(hero.getName() + hero.getCoordinates()));
+//        System.out.println(teamName + ":");
+//        team.forEach(hero ->System.out.println(hero.getName() + hero.getCoordinates()));
 
         return team;
 

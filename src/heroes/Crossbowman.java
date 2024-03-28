@@ -6,7 +6,7 @@ public class Crossbowman extends BaseHero {
     public Crossbowman(Coordinate coordinates) {
         super(coordinates);
         this.strength = 80;
-        this.weapon = 80;
+        this.weapon = 20;
         this.money = 100;
         this.initiative = 3;
     }
@@ -24,11 +24,19 @@ public class Crossbowman extends BaseHero {
             BaseHero closestOpponent = findClosestElement(opponents);
             attack(closestOpponent);
             this.weapon--;
+            this.history = "Я выстрелил в " + closestOpponent.getName() + ", потратил 1 стрелу";
+        } else {
+            if (this.hp <= 0) {
+                this.history =  "";
+            } else {
+                this.history =  "У меня закончились стрелы";
+                this.hp = 0;
+            }
         }
     }
 
     @Override
     public String getInfo() {
-        return "Арбалетчик";
+        return "Арбалетчик: " + this.history;
     }
 }

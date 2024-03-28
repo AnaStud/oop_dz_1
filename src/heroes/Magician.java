@@ -28,7 +28,7 @@ public class Magician extends BaseHero {
 
     @Override
     public String getInfo() {
-        return "Колдун";
+        return "Чародей: " + this.history;
     }
 
 }

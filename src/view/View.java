@@ -31,11 +31,11 @@ public class View {
         for (BaseHero human: Main.allTeam) {
             if (human.getX() == x && human.getY() == y){
                 if (human.getHp() == 0) {
-                    out = "|" + (AnsiColors.ANSI_RED + human.getName().charAt(0) + AnsiColors.ANSI_RESET);
+                    out = "|" + (AnsiColors.ANSI_RED + human.getInfo().charAt(0) + AnsiColors.ANSI_RESET);
                     break;
                 }
-                if (Main.team1.contains(human)) out = "|" + (AnsiColors.ANSI_GREEN + human.getName().charAt(0) + AnsiColors.ANSI_RESET);
-                if (Main.team2.contains(human)) out = "|" + (AnsiColors.ANSI_BLUE + human.getName().charAt(0) + AnsiColors.ANSI_RESET);
+                if (Main.team1.contains(human)) out = "|" + (AnsiColors.ANSI_GREEN + human.getInfo().charAt(0) + AnsiColors.ANSI_RESET);
+                if (Main.team2.contains(human)) out = "|" + (AnsiColors.ANSI_BLUE + human.getInfo().charAt(0) + AnsiColors.ANSI_RESET);
                 break;
             }
         }
@@ -61,7 +61,7 @@ public class View {
         }
         System.out.print("|    ");
         System.out.print(Main.team1.get(0));
-        tabSetter(Main.team1.get(0).toString().length(), l);
+        tabSetter(Main.team1.get(0).getInfo().length(), l);
         System.out.println(Main.team2.get(0));
         System.out.println(midl10);
 
@@ -71,7 +71,7 @@ public class View {
             }
             System.out.print("|    ");
             System.out.print(Main.team1.get(j));
-            tabSetter(Main.team1.get(j).toString().length(), l);
+            tabSetter(Main.team1.get(j).getInfo().length(), l);
             System.out.println(Main.team2.get(j));
             System.out.println(midl10);
         }
@@ -80,7 +80,7 @@ public class View {
         }
         System.out.print("|    ");
         System.out.print(Main.team1.get(9));
-        tabSetter(Main.team1.get(9).toString().length(), l);
+        tabSetter(Main.team1.get(9).getInfo().length(), l);
         System.out.println(Main.team2.get(9));
         System.out.println(bottom10);
     }

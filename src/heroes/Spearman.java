@@ -27,14 +27,23 @@ public class Spearman extends BaseHero {
             double distance = this.coordinates.calculateDistance(closestOpponent.getX(), closestOpponent.getY());
             if (distance < 2) {
                 attack(closestOpponent);
+                this.history = "Я ударил " + closestOpponent.getName();
             } else {
-                goToOpponent(closestOpponent, friends);
+                goToOpponent(closestOpponent, friends, opponents);
+                this.history = "Я шагнул в сторону " + closestOpponent.getName();
+            }
+        } else {
+            if (this.hp <= 0) {
+                this.history =  "";
+            } else {
+                this.history =  "У меня закончилось оружие";
+                this.hp = 0;
             }
         }
     }
 
     @Override
     public String getInfo() {
-        return "Копейщик";
+        return "Пехотинец: " + this.history;
     }
 }

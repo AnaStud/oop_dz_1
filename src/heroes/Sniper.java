@@ -8,7 +8,7 @@ public class Sniper extends BaseHero {
     public Sniper(Coordinate coordinates) {
         super(coordinates);
         this.strength = 100;
-        this.weapon = 100;
+        this.weapon = 10;
         this.money = 0;
         this.initiative = 3;
     }
@@ -21,7 +21,24 @@ public class Sniper extends BaseHero {
     }
 
     @Override
+    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends, int direction) {
+        if (this.hp > 0 && this.weapon > 0) {
+            BaseHero closestOpponent = findClosestElement(opponents);
+            attack(closestOpponent);
+            this.weapon--;
+            this.history = "Я выстрелил в " + closestOpponent.getName() + ", потратил 1 патрон";
+        } else {
+            if (this.hp <= 0) {
+                this.history =  "";
+            } else {
+                this.history =  "У меня закончились патроны";
+                this.hp = 0;
+            }
+        }
+    }
+
+    @Override
     public String getInfo() {
-        return "Снайпер";
+        return "Снайпер: " + this.history;
     }
 }
