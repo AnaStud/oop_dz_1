@@ -4,9 +4,7 @@ import heroes.*;
 import view.View;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Main {
 
@@ -17,9 +15,9 @@ public class Main {
 
         Random random = new Random();
 
-        team1 = createTeam("Green", 0, random);
+        team1 = createTeam(0, random);
         System.out.println();
-        team2 = createTeam("Blue", 3, random);
+        team2 = createTeam(3, random);
         System.out.println();
 
         allTeam = new ArrayList<>();
@@ -30,17 +28,17 @@ public class Main {
 
         boolean theEnd = false;
         View.view();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 15; i++) {
             for (BaseHero hero : allTeam) {
                 if (team1.contains(hero)) {
-                    hero.step(team2, team1, 1);
+                    hero.step(1, team1, team2);
                     if (hero.isWinner(team2)) {
                         System.out.println("Команда Green победила!");
                         theEnd = true;
                         break;
                     }
                 } else {
-                    hero.step(team1, team2, -1);
+                    hero.step(-1, team2, team1);
                     if (hero.isWinner(team1)) {
                         System.out.println("Команда Blue победила!");
                         theEnd = true;
@@ -52,17 +50,14 @@ public class Main {
         }
     }
 
-    public static ArrayList<BaseHero> createTeam(String teamName, int index, Random random) {
+    public static ArrayList<BaseHero> createTeam(int index, Random random) {
 
         ArrayList<BaseHero> team = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            Coordinate coordinates = new Coordinate(index * 3, i); // Команда 1 находится в левой части поля
+            Coordinate coordinates = new Coordinate(index * 3, i);
             team.add(randomHero(index, random, coordinates));
         }
-
-//        System.out.println(teamName + ":");
-//        team.forEach(hero ->System.out.println(hero.getName() + hero.getCoordinates()));
 
         return team;
 

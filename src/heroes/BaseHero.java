@@ -1,5 +1,7 @@
 package heroes;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 public abstract class BaseHero implements Stepable {
@@ -10,11 +12,8 @@ public abstract class BaseHero implements Stepable {
     protected int maxHp; //максимальное здоровье
     protected int strength; //сила
     protected int weapon; //оружие
-    protected int money; //деньги
     protected Coordinate coordinates; //положение на поле (координаты)
-
     public int initiative; //инициатива
-
     protected String history;
 
     static {
@@ -30,35 +29,69 @@ public abstract class BaseHero implements Stepable {
 
     @Override
     public String toString() {
-        return getInfo(); //String.format("%s: Здоровье: %d, Сила: %d, Оружие: %d, Деньги: %d",
-                          //      this.name, this.hp, this.strength, this.weapon, this.money);
+        return getInfo();
     }
 
     public String getName() {
         return this.name;
     }
     public int getHp() { return this.hp; }
+    public int getMaxHp() { return this.maxHp; }
     public int getX() { return this.coordinates.x; }
     public int getY() { return this.coordinates.y; }
+    public int getWeapon() { return this.weapon; }
+    public String getHistory() { return this.history; }
 
-    public String getCoordinates() {
-        return " (" + String.valueOf(coordinates.x) + ":" + String.valueOf(coordinates.y) + ")";
+    public void setHp(int hp) { this.hp = hp; }
+    public void setWeapon(int weapon) { this.weapon += weapon; }
+
+    public void getDamage(int damage) {
+        if (this.hp - damage > 0) {
+            this.hp -= damage;
+        } else {
+            this.hp = 0;
+        }
     }
 
-    public BaseHero findClosestElement(ArrayList<BaseHero> opponents) {
+    public BaseHero findClosestHero(ArrayList<BaseHero> heroes) {
 
-        BaseHero closestHero = opponents.getFirst();
+        String myName = this.getName();
+        BaseHero closestHero = heroes.getFirst();
         double minDistance = this.coordinates.calculateDistance(closestHero.getX(), closestHero.getY());
 
-        for (BaseHero hero : opponents) {
-            double distance = this.coordinates.calculateDistance(hero.getX(), hero.getY());
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestHero = hero;
+        for (BaseHero hero : heroes) {
+            if (!(hero.getName().equals(myName)) && (hero.getHp() > 0)) {
+                double distance = this.coordinates.calculateDistance(hero.getX(), hero.getY());
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestHero = hero;
+                }
             }
         }
 
         return closestHero;
+    }
+
+    public BaseHero findPoorestFriend(ArrayList<BaseHero> friends) {
+
+        String myName = this.getName();
+        ArrayList<BaseHero> poorests = new ArrayList<>();
+
+        for (BaseHero friend : friends) {
+            if (!(friend instanceof Magician || friend instanceof Monk)) {
+                int friendHp = friend.getHp();
+                if (friendHp > 0) {
+                    poorests.add(friend);
+                }
+            }
+        }
+
+        if (!poorests.isEmpty()) {
+            poorests.sort(Comparator.comparingInt(BaseHero::getWeapon));
+            return poorests.getFirst();
+        } else {
+            return friends.getFirst();
+        }
     }
 
     public void goToOpponent(BaseHero closestOpponent, ArrayList<BaseHero> friends, ArrayList<BaseHero> opponents) {
@@ -67,55 +100,25 @@ public abstract class BaseHero implements Stepable {
 
         if (Math.abs(dX) > Math.abs(dY)) {
             this.coordinates.stepX(dX > 0, friends, opponents);
-            //System.out.println("Шагнул по оси Х " + this.getCoordinates());
         } else {
             this.coordinates.stepY(dY > 0, friends, opponents);
-            //System.out.println("Шагнул по оси Y " + this.getCoordinates());
         }
     }
 
-    public void attack(BaseHero target) {
-        int damage = BaseHero.random.nextInt(10, this.strength);
-        target.getDamage(damage);
-    }
-    public void getDamage(int damage) {
-        if (this.hp - damage > 0) {
-            this.hp -= damage;
-        }
-        else {
-            this.hp = 0;
-        }
-        //System.out.printf("%s: Урон %d. Здоровье %d.\n", this.name, damage, this.hp);
-    }
-
-    public void heal(BaseHero target) {
-        this.history = String.format("%s: Я не умею лечить.\n", this.name);
-    }
-
-    public abstract void getMoney();
-
-    public void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends, int direction) {
+    public void step(int direction, ArrayList<BaseHero> friends, ArrayList<BaseHero> opponents) {
         if (this.hp > 0) {
-            int oldX = this.coordinates.x;
             this.coordinates.stepX(direction > 0, friends, opponents);
-            if (oldX == this.coordinates.x) {
-                this.getDamage(10);
-                this.history = "";
-            } else {
-                this.history = "Я шагнул " + (direction > 0 ? "вправо" :"влево");
-            }
         } else {
             this.history = "";
         }
     }
 
     public boolean isWinner(ArrayList<BaseHero> opponents) {
-        boolean result = true;
         for (BaseHero opponent : opponents) {
-            if (opponent.hp > 0) {
-                result = false;
+            if (opponent.getHp() > 0) {
+                return false;
             }
         }
-        return result;
+        return true;
     }
 }

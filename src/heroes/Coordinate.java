@@ -37,7 +37,6 @@ public class Coordinate {
         }
         for (BaseHero opponent : opponents) {
             if (opponent.coordinates.x == newX && opponent.coordinates.y == newY) {
-                opponent.getDamage(10);
                 return false;
             }
         }

@@ -3,7 +3,7 @@ package heroes;
 import java.util.ArrayList;
 
 public interface Stepable {
-    void step(ArrayList<BaseHero> opponents, ArrayList<BaseHero> friends, int direction);
+    void step(int direction, ArrayList<BaseHero> friends, ArrayList<BaseHero> opponents);
 
     String getInfo();
 }
